@@ -4,8 +4,9 @@ import Player from "./game/objects/player.js";
 import config from "./config.js"; 
 import registerKeys from "./game/input/keyboard.js";
 import registerPointerEvents from "./game/input/pointer.js";
-import Bush from "./game/objects/obstacles/bush.js";
-import registerOrientationEvents from "./game/input/orientation.js";
+import Fox from "./game/objects/enemies/fox.js";
+import Bullet from "./game/objects/bullets/bullet.js";
+import Wolf from "./game/objects/enemies/wolf.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("mainCanvas");
@@ -15,13 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
     game.registerActions(config.actions); // Register keyboard events
 
     registerPointerEvents(game, canvas); // Register mouse events
-    //registerOrientationEvents(game); // Register device orientation events
 
-  
     const level1 = game.addScene(new Scene("level1", game));
     level1.setup((scene) => {
-        scene.addObject(new Player(scene, {x: 800, y: 400, width: 50, height: 50, color: '#0ff'}));
-        scene.addObject(new Bush(scene, {x: 350, y: 550, r:20, color: '#0f0'}));
+        scene.addObject(new Bullet(scene, {x: 200, y: 300, r:20, color: '#0f0'}));
+        scene.addObject(new Player(scene, {x: 200, y: 400, width: 50, height: 50, color: '#0ff'}));
+        scene.addObject(new Fox(scene, {x: 200, y: 500, r:20, color: '#0f0'}));
+        scene.addObject(new Wolf(scene, {x: 200, y: 600, r:20, color: '#0f0'}));
     });
     level1.initialize();
     

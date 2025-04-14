@@ -10,26 +10,45 @@ export default class Player extends Rectangle {
         
         this.renderer = new StackedSprite(stackDefRabbit);
         this.rotation = 0;
-        this.rotSped = Math.PI /2 ; // Rotation speed
+        this.rotSped = Math.PI /4 ; // Rotation speed
+
+        this.hoppingSineTime = 0; // Time variable for sine wave
+        this.hoppingAmplitude = 10; // Amplitude of the hopping motion
+        this.hoppingSpeed = 12; // Speed of the hopping motion
+
+        this.maxSpeed = 200; // Maximum speed of the player in pixels per second
     }
 
     
     update(deltaTime) {
         super.update(deltaTime); // Call the parent class update method
-        this.rotation += deltaTime * this.rotSped;
-        /* Keyboard Input Handling 
-        */
+        // Calculate rotation to look at the mouse position
+        const dx = this.game.mousePos.x - this.x;
+        const dy = this.game.mousePos.y - this.y;
+        this.rotation = Math.atan2(dy, dx);
+        
+        let moving = false;
         if(this.game.actionActive('left')) {
-            this.x -= 100 * deltaTime; // Move left
+            this.x -= this.maxSpeed * deltaTime; // Move left
+            moving = true;
         }
         if(this.game.actionActive('right')) {
-            this.x += 100 * deltaTime; // Move right
+            this.x += this.maxSpeed * deltaTime; // Move right
+            moving = true;
         }
         if(this.game.actionActive('up')) {
-            this.y -= 100 * deltaTime; // Move up
+            this.y -= this.maxSpeed * deltaTime; // Move up
+            moving = true;
         }
         if(this.game.actionActive('down')) {
-            this.y += 100 * deltaTime; // Move down
+            this.y += this.maxSpeed * deltaTime; // Move down
+            moving = true;
+        }
+
+        if(!moving) {
+            this.hoppingSineTime = 0; // Reset time if not moving
+        } else {
+            this.hoppingSineTime += deltaTime; // Increment time if moving
         }
         /* Scene switching logic
         if(this.x > 300) {
@@ -53,6 +72,19 @@ export default class Player extends Rectangle {
 
   
     render(ctx) {
-        this.renderer.render(ctx, this.x, this.y, this.rotation);
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.scale(1, 0.5);
+        ctx.fillStyle = '#0002';
+        ctx.beginPath();
+        ctx.arc(0, 0, 28, 0, Math.PI * 2);
+        ctx.arc(0, 0, 26, 0, Math.PI * 2);
+        ctx.arc(0, 0, 22, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+        // Calculate the hopping motion using a sine wave
+        const hopOffset = Math.abs(Math.sin(this.hoppingSineTime * this.hoppingSpeed) * this.hoppingAmplitude);
+        this.renderer.render(ctx, this.x, this.y - hopOffset, this.rotation);
     }
 }
