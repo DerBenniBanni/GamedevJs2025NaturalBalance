@@ -13,7 +13,7 @@ export default class Player extends Rectangle {
         this.rotSped = Math.PI /4 ; // Rotation speed
 
         this.hoppingSineTime = 0; // Time variable for sine wave
-        this.hoppingAmplitude = 10; // Amplitude of the hopping motion
+        this.hoppingAmplitude = 20; // Amplitude of the hopping motion
         this.hoppingSpeed = 12; // Speed of the hopping motion
 
         this.maxSpeed = 200; // Maximum speed of the player in pixels per second
