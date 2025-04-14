@@ -10,7 +10,7 @@ export default class Player extends Rectangle {
         
         this.renderer = new StackedSprite(stackDefRabbit);
         this.rotation = 0;
-        this.rotSped = Math.PI * Math.random() /4 + 0.2; // Rotation speed
+        this.rotSped = Math.PI /2 ; // Rotation speed
     }
 
     
