@@ -1,13 +1,13 @@
 import Circle from "../circle.js";
 import StackedSprite from "../renderer/stackedsprite.js";
-import stackDefWolf from "../spritestacks/wolf.js";
+import stackDefLynx from "../spritestacks/lynx.js";
 
-export default class Wolf extends Circle {
+export default class Lynx extends Circle {
     constructor(scene, {x, y, r}) {
         super(scene, {x, y, r}); // Call the parent class constructor
-        this.type = "wolf"; // Set the type of the object to "bush"
+        this.type = "lynx"; // Set the type of the object to "bush"
         this.color = '#008000'; // Set the color to green
-        this.renderer = new StackedSprite(stackDefWolf);
+        this.renderer = new StackedSprite(stackDefLynx);
         this.rotation = 0;
     }
     update(deltaTime) {

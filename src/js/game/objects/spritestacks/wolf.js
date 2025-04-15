@@ -6,7 +6,7 @@ let wolfBlackFill = '000';
 let wolfBlackStroke = '777';
 let wolfTongueFill = 'a77';
 
-const stackDefFox = {
+const stackDefWolf = {
     def:[
         // Box: base-height, height, top, left, width, depth, fillcolor, strokecolor
         // Tail
@@ -41,5 +41,5 @@ const stackDefFox = {
         ['B', 35, 7, 17, 10, 1, 6, wolfStroke,],
     ]
 };
-export default stackDefFox;
-export {stackDefFox};
+export default stackDefWolf;
+export {stackDefWolf};

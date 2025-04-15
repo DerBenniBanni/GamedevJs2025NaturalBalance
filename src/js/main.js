@@ -7,6 +7,7 @@ import registerPointerEvents from "./game/input/pointer.js";
 import Fox from "./game/objects/enemies/fox.js";
 import Bullet from "./game/objects/bullets/bullet.js";
 import Wolf from "./game/objects/enemies/wolf.js";
+import Lynx from "./game/objects/enemies/lynx.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("mainCanvas");
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scene.addObject(new Player(scene, {x: 200, y: 400, width: 50, height: 50, color: '#0ff'}));
         scene.addObject(new Fox(scene, {x: 200, y: 500, r:20, color: '#0f0'}));
         scene.addObject(new Wolf(scene, {x: 200, y: 600, r:20, color: '#0f0'}));
+        scene.addObject(new Lynx(scene, {x: 200, y: 700, r:20, color: '#0f0'}));
     });
     level1.initialize();
     
