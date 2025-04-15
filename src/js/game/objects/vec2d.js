@@ -1,4 +1,4 @@
-export default class Vec2d{
+export default class Vec2d {
     constructor(x,y) {
         this.x = x;
         this.y = y;

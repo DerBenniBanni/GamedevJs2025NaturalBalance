@@ -1,20 +1,24 @@
-import Circle from "../circle.js";
-import StackedSprite from "../renderer/stackedsprite.js";
+import SpritestackObject from "../spritestackobject.js";
 import stackDefCarrotBullet from "../spritestacks/carrotbullet.js";
 
-export default class Bullet extends Circle {
+export default class Bullet extends SpritestackObject{
     constructor(scene, {x, y, r}) {
-        super(scene, {x, y, r}); // Call the parent class constructor
-        this.type = "bullet"; // Set the type of the object to "bush"
-        this.color = '#008000'; // Set the color to green
-        this.renderer = new StackedSprite(stackDefCarrotBullet);
-        this.rotation = 0;
+        super(scene, {x, y, stackdef: stackDefCarrotBullet}); 
+        this.type = "bullet";
+        this.speed = 0;
+        this.ttl = 1;
+        this.initTtl = this.ttl;
+        this.height = 15;
+        this.rotation = r || 0
     }
+    /*
     update(deltaTime) {
-        super.update(deltaTime); // Call the parent class update method
-        this.rotation += deltaTime * Math.PI / 4; // Update the rotation of the bush
+        super.update(deltaTime); 
     }
+    */
     render(ctx) {
-        this.renderer.render(ctx, this.x, this.y, this.rotation); // Render the bush using the StackedSprite renderer
+        this.renderShadow(10, ctx);
+        let height = this.height * (this.ttl / this.initTtl);
+        this.renderer.render(ctx, this.x, this.y - height, this.rotation); 
     }
 }

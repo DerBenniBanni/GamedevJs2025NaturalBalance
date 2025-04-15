@@ -10,6 +10,7 @@ const config = {
         { name: 'shift', keys: ['ShiftLeft', 'ShiftRight'] },
         { name: 'ctrl', keys: ['ControlLeft', 'ControlRight'] },
         { name: 'alt', keys: ['AltLeft', 'AltRight'] },
+        { name: 'fire', keys: ['Space', 'mousedown'] },
     ]
 };
 

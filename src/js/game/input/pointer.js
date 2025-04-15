@@ -9,14 +9,16 @@ export default function registerPointerEvents(game, canvas) {
     function handleTouchEvent(ev, isStart) {
         ev.preventDefault(); // Prevent default action for the touch event
         const {x, y} = getPosOverCanvas(ev); // Get the mouse position over the canvas
-        if(ev.pointerType == 'mouse' || true) {
-            game.mousePos.x = x; // Update mouse position
-            game.mousePos.y = y; // Update mouse position
-            if(isStart){
-                game.mousePosStart = game.mousePos.clone(); // Store the starting position of the mouse
+        game.mousePos.x = x; // Update mouse position
+        game.mousePos.y = y; // Update mouse position
+        if(isStart){
+            game.mousePosStart = game.mousePos.clone(); // Store the starting position of the mouse
+            if(ev.pointerType == 'mouse') {
+                game.keys['mousedown'] = true; // Set mouse down state
             }
+        } else {
+            game.keys['mousedown'] = false; // Reset mouse down state
         }
-        //console.log(game.mousePos);
     }
     
     function handleTouchMoveEvent(ev) {
@@ -26,7 +28,6 @@ export default function registerPointerEvents(game, canvas) {
             game.mousePos.x = x; // Update mouse position
             game.mousePos.y = y; // Update mouse position
         }
-        //console.log(game.mousePos);
     }
     
     document.addEventListener('pointerdown', (ev) => {

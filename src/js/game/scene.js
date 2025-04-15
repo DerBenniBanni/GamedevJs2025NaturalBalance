@@ -21,6 +21,7 @@ export default class Scene {
     }
 
     update(deltaTime) {
+        this.objects = this.objects.filter(object => object.ttl > 0); // Remove objects that have expired
         this.objects.sort((a, b) => a.y - b.y); // Sort objects by their y position
         for (const object of this.objects) {
             object.update(deltaTime); // Update each object in the scene
