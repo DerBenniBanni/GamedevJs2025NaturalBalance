@@ -20,6 +20,8 @@ export default class Game {
         this.mousePosStart = new Vec2d(0,0);
         this.touches = [];
 
+        
+
     }
 
     start() {

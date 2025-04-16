@@ -14,6 +14,14 @@ export default class Scene {
     getObjectsByType(type) {
         return this.objects.filter(object => object.type === type); // Get objects of a specific type
     }
+    getObjectByType(type) {
+        let objects = this.getObjectsByType(type); // Get objects of a specific type
+        if(objects.length > 0) {
+            return objects[0]; // Return the first object of the specified type
+        } else {
+            return null; // Return null if no objects of the specified type are found
+        }
+    }
 
     setup(setupFunction) {
         this.setupFunction = setupFunction;

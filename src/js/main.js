@@ -9,10 +9,17 @@ import Bullet from "./game/objects/bullets/bullet.js";
 import Wolf from "./game/objects/enemies/wolf.js";
 import Lynx from "./game/objects/enemies/lynx.js";
 import Trigger from "./game/objects/trigger/trigger.js";
+import ImageBuffer from "./game/imagebuffer.js";
+import TitleLogo from "./game/objects/titlelogo.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("mainCanvas");
     window.game = new Game(canvas);
+    window.imagebuffer =new ImageBuffer();
+    //imagebuffer.preRender(new Player(game, {x: 0, y: 0, width: 50, height: 50, color: '#f00'}), 100, 100);
+    imagebuffer.preRender(new Fox(new Scene("level1", game), {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
+    imagebuffer.preRender(new Wolf(new Scene("level1", game), {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
+    imagebuffer.preRender(new Lynx(new Scene("level1", game), {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
 
     registerKeys(game); // Register actions with the game
     game.registerActions(config.actions); // Register keyboard events
@@ -34,6 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
         trigger.addListener('exit', (trigger, player) => {
             console.log('Player exited the trigger area!');
         });
+        scene.addObject(new TitleLogo(scene, {x: 400, y: 20, width: 200, height: 100}));
+        
     });
     level1.initialize();
     
@@ -41,6 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const level2 = game.addScene(new Scene("level2", game));
     level2.setup((scene) => {
         scene.addObject(new Player(scene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}));
+        for(let i = 0; i < 100; i++) {
+            scene.addObject(new Fox(scene, {x: Math.random() * 1920, y: Math.random()*1080, r:20, color: '#0f0'}));
+            scene.addObject(new Wolf(scene, {x: Math.random() * 1920, y: Math.random()*1080, r:20, color: '#0f0'}));
+            scene.addObject(new Lynx(scene, {x: Math.random() * 1920, y: Math.random()*1080, r:20, color: '#0f0'}));
+        }
     });
    
 
