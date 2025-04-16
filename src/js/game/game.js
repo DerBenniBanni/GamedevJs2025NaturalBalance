@@ -58,6 +58,7 @@ export default class Game {
 
     switchToScene(scene) {
         this.currentScene = scene; // Switch to the new scene
+        this.currentScene.initialize();
     }
 
     switchToSceneName(name) {

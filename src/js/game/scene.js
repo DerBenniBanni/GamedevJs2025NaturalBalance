@@ -11,6 +11,10 @@ export default class Scene {
         return object; // Return the added object
     }
 
+    getObjectsByType(type) {
+        return this.objects.filter(object => object.type === type); // Get objects of a specific type
+    }
+
     setup(setupFunction) {
         this.setupFunction = setupFunction;
     }
