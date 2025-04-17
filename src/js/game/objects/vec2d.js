@@ -60,4 +60,5 @@ export default class Vec2d {
         this.y = arr[1]; // Set the y coordinate from an array
         return this; // Return this Vec2d object
     }
+
 }

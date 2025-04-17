@@ -99,7 +99,17 @@ export default class StackedSprite {
             ctx.strokeStyle = this.fillStyle;
         } else {
             if (layer[0] === "R") {
+                let x = Math.cos(-rotation + Math.PI * 0.5) * 40;
+                let y = Math.sin(-rotation + Math.PI * 0.5) * 40;
+                let gradient = ctx.createRadialGradient(x, y, 3, x, y, 120);
+                // Add three color stops
+                gradient.addColorStop(0, this.fillStyle);
+                gradient.addColorStop(1, "#000");
+                ctx.fillStyle = gradient;
                 ctx.fillRect(layer[1], layer[2], layer[3], layer[4]);
+                //ctx.fillStyle = '#ff0';
+                //ctx.fillRect(x,y,3,3);
+                ctx.fillStyle = this.fillStyle;
             }
         }
     }
