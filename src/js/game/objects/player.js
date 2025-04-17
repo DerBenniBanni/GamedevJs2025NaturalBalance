@@ -27,8 +27,20 @@ export default class Player extends Rectangle {
     update(deltaTime) {
         super.update(deltaTime); // Call the parent class update method
         this.bulletTimer -= deltaTime; // Decrease the bullet timer
-        // Calculate rotation to look at the mouse position
-        this.lookAt(this.game.mousePos.x, this.game.mousePos.y);
+        
+        if(this.game.inputMode == 'keyboard') {
+            // Calculate rotation to look at the mouse position
+            this.lookAt(this.game.mousePos.x, this.game.mousePos.y);
+        }
+        if(this.game.inputMode == 'gamepad') {
+            
+            let dx = this.game.gamepad.axisValue('rightHorizontal');
+            let dy = this.game.gamepad.axisValue('rightVertical');
+            if(dx + dy != 0) { // Check if the right stick is moved
+                // Calculate rotation to look at the right stick position
+                this.lookAt(this.x + dx*100, this.y + dy*100);
+            }
+        }
         
         // Handle keyboard input for movement        
         let moving = false;
@@ -48,8 +60,15 @@ export default class Player extends Rectangle {
             this.y += this.maxSpeed * deltaTime; // Move down
             moving = true;
         }
+        if(!moving && this.game.inputMode == 'gamepad') {
+            let dx = this.game.gamepad.axisValue('leftHorizontal');
+            let dy = this.game.gamepad.axisValue('leftVertical');
+            moving = Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1; // Check if the left stick is moved
+            this.x += dx * this.maxSpeed * deltaTime; // Move left/right based on gamepad input
+            this.y += dy * this.maxSpeed * deltaTime; // Move up/down based on gamepad input
+        }
 
-        if(this.game.actionActive('fire') && this.bulletTimer <= 0) {
+        if(this.bulletTimer <= 0 && this.game.actionActive('fire') ) {
             let bullet = this.scene.addObject(new Bullet(this.scene, {x: this.x, y: this.y-1, r:this.rotation}));
             bullet.speed = this.bulletSpeed;
             this.bulletTimer = this.bulletInterval; // Reset the bullet timer
@@ -59,24 +78,7 @@ export default class Player extends Rectangle {
         } else {
             this.hoppingSineTime += deltaTime; // Increment time if moving
         }
-        /* Scene switching logic
-        if(this.x > 300) {
-            let name = this.scene.name == "level1" ? "level2" : "level1";
-            let scene = this.game.getScene(name);
-            scene.initialize();
-            this.game.switchToScene(scene);
-        }
-        */
-        /* Mouse Input Handling 
-        this.x = this.game.mousePos.x;
-        this.y = this.game.mousePos.y;
-        */
-        /* Device Orientation Handling 
-        if(this.game.orientation) {
-            this.x += deltaTime * (this.game.orientation.gamma * 10); // Move left/right based on device orientation
-            this.y += deltaTime * (this.game.orientation.beta * 10); // Move up/down based on device orientation
-        }
-        */
+        
     }
 
   

@@ -20,7 +20,9 @@ export default class Game {
         this.mousePosStart = new Vec2d(0,0);
         this.touches = [];
 
-        
+        this.gamepad = null;
+
+        this.inputMode = 'keyboard'; // Default input mode
 
     }
 
@@ -38,6 +40,9 @@ export default class Game {
         requestAnimationFrame(() => this.gameLoop());
     }
     update() {
+        if(this.gamepad) {
+            this.gamepad.update(); // Update gamepad state
+        }
         if (this.currentScene) {
             this.currentScene.update(this.deltaTime); // Update the current scene
         }

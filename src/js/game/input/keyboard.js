@@ -6,6 +6,7 @@ export default function registerKeys(game) {
             ev.preventDefault(); // Prevent default action for the key event
         }
         game.keys[ev.code] = bool;
+        game.inputMode = 'keyboard'; // Set input mode to keyboard
     }
     document.addEventListener('keydown', (ev) => handleEvent(ev, true)); // Register keydown event
     document.addEventListener('keyup', (ev) => handleEvent(ev, false)); // Register keyup event

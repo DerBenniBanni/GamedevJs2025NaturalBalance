@@ -11,6 +11,7 @@ import Lynx from "./game/objects/enemies/lynx.js";
 import Trigger from "./game/objects/trigger/trigger.js";
 import ImageBuffer from "./game/imagebuffer.js";
 import TitleLogo from "./game/objects/titlelogo.js";
+import registerGamepadEvents from "./game/input/gamepad.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("mainCanvas");
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     game.registerActions(config.actions); // Register keyboard events
 
     registerPointerEvents(game, canvas); // Register mouse events
+    registerGamepadEvents(game, canvas); // Register gamepad events
 
     const level1 = game.addScene(new Scene("level1", game));
     level1.setup((scene) => {
