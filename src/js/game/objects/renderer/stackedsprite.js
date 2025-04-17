@@ -35,11 +35,11 @@ export default class StackedSprite {
                                     layer.push([
                                         "R", x, z, width, depth
                                     ]);
-                                    layer.push(["#", fill]);
-                                    layer.push([
-                                        "R", x+1, z+1, width-2, depth-2
-                                    ]);
-                                } 
+                                }
+                                layer.push(["#", fill]);
+                                layer.push([
+                                    "R", x+1, z+1, width-2, depth-2
+                                ]);
                             } else {
                                 layer.push(["#", fill]);
                                 layer.push([

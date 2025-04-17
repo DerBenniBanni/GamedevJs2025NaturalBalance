@@ -12,6 +12,7 @@ import Trigger from "./game/objects/trigger/trigger.js";
 import ImageBuffer from "./game/imagebuffer.js";
 import TitleLogo from "./game/objects/titlelogo.js";
 import registerGamepadEvents from "./game/input/gamepad.js";
+import Coin from "./game/objects/stuff/coin.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("mainCanvas");
@@ -30,12 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const level1 = game.addScene(new Scene("level1", game));
     level1.setup((scene) => {
-        scene.addObject(new Bullet(scene, {x: 200, y: 300, r:20, color: '#0f0'}));
-        scene.addObject(new Player(scene, {x: 200, y: 400, width: 50, height: 50, color: '#0ff'}));
-        scene.addObject(new Fox(scene, {x: 200, y: 500, r:20, color: '#0f0'}));
-        scene.addObject(new Wolf(scene, {x: 200, y: 600, r:20, color: '#0f0'}));
-        scene.addObject(new Lynx(scene, {x: 200, y: 700, r:20, color: '#0f0'}));
-        let trigger = scene.addObject(new Trigger(scene, {x: 500, y: 300, width: 200, height: 300}));
+        scene.addObject(new Coin(scene, {x: 200, y: 300, r:20, color: '#0f0'}));
+        scene.addObject(new Player(scene, {x: 600, y: 450, width: 50, height: 50, color: '#0ff'}));
+        scene.addObject(new Fox(scene, {x: 500, y: 300, r:20, color: '#0f0'}));
+        scene.addObject(new Wolf(scene, {x: 650, y: 250, r:20, color: '#0f0'}));
+        scene.addObject(new Lynx(scene, {x: 1300, y: 100, r:20, color: '#0f0'}));
+        let trigger = scene.addObject(new Trigger(scene, {x: 500, y: 800, width: 200, height: 100}));
         trigger.addListener('enter', (trigger, player) => {
             console.log('Player entered the trigger area!');
             game.switchToSceneName("level2"); // Switch to level2 scene

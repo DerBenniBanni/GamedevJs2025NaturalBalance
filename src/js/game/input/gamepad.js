@@ -73,16 +73,12 @@ class Gamepad {
         for (let i = 0; i < this.gamepad.buttons.length; i++) {
             const button = this.gamepad.buttons[i];
             this.buttons[i] = button.pressed; // Store the button state
-            if(button.pressed) {
-                this.game.inputMode = 'gamepad'; // Set input mode to gamepad if any button is pressed
-            }
         }
     }
     updateAxes() {
         for (let i = 0; i < this.gamepad.axes.length; i++) {
             const axis = this.gamepad.axes[i];
             if(Math.abs(axis) > 0.1) {
-                this.game.inputMode = 'gamepad'; // Set input mode to gamepad if any axis is moved
                 this.axes[i] = axis; // Store the axis state
             } else {
                 this.axes[i] = 0; // Reset the axis state if not moved
@@ -109,6 +105,7 @@ export default function registerGamepadEvents(game, canvas) {
         if(!game.actions[action].buttons) return false; // Check if the action has buttons
         return game.actions[action].buttons.some(button => {
             if (game.gamepad.buttonPressed(button)) { // Check if the button is pressed
+                game.inputMode = 'gamepad';
                 return true; // Return true if any button is pressed for the action
             }
             return false;

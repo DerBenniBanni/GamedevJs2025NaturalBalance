@@ -28,12 +28,19 @@ export default class TitleLogo extends Rectangle {
         super.update(deltaTime); 
     }
     render(ctx) {
-        [['#000', '#000', 10], ['#fff', '#000', 0]].forEach(([fill, stroke, yOffset]) => {
+        [
+            ['#630', , 0, 12], 
+            ['#950', , 2, 8], 
+            ['#c70', , 2, 4], 
+            ['#fa0', '#fc0', 2, 0]
+        ].forEach(([fill, stroke, strokeWidth, yOffset,]) => {
             ctx.save();
             ctx.translate(this.x, this.y);
             ctx.fillStyle = fill;
-            ctx.strokeStyle = stroke;
-            ctx.lineWidth = 2;
+            if(stroke) {
+                ctx.strokeStyle = stroke;
+                ctx.lineWidth = strokeWidth;
+            }
             for(let i = 0; i < this.letters.length; i++) {
                 let letter = this.letters[i];
                 ctx.beginPath();
@@ -48,7 +55,9 @@ export default class TitleLogo extends Rectangle {
                 }
                 ctx.closePath();
                 ctx.fill();
-                ctx.stroke();
+                if(stroke) {
+                    ctx.stroke();
+                }
             }
             ctx.restore();
         });
