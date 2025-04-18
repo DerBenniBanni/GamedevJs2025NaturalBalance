@@ -13,21 +13,47 @@ import ImageBuffer from "./game/imagebuffer.js";
 import TitleLogo from "./game/objects/titlelogo.js";
 import registerGamepadEvents from "./game/input/gamepad.js";
 import Coin from "./game/objects/stuff/coin.js";
+import Terrain from "./game/objects/terrain/terrain.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("mainCanvas");
     window.game = new Game(canvas);
     window.imagebuffer =new ImageBuffer();
-    //imagebuffer.preRender(new Player(game, {x: 0, y: 0, width: 50, height: 50, color: '#f00'}), 100, 100);
-    imagebuffer.preRender(new Fox(new Scene("level1", game), {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
-    imagebuffer.preRender(new Wolf(new Scene("level1", game), {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
-    imagebuffer.preRender(new Lynx(new Scene("level1", game), {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
-
+    
+    let preRenderScene = new Scene("preRender", game);
+    
+    imagebuffer.preRender(new Fox(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
+    imagebuffer.preRender(new Wolf(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
+    imagebuffer.preRender(new Lynx(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
+    imagebuffer.preRender(new Coin(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
+    
+    imagebuffer.preRenderVariation(new Terrain(preRenderScene, {x: 50, y: 50, width: 50, height: 50}), 140, 200,10);
+   
     registerKeys(game); // Register actions with the game
     game.registerActions(config.actions); // Register keyboard events
 
     registerPointerEvents(game, canvas); // Register mouse events
     registerGamepadEvents(game, canvas); // Register gamepad events
+    const menuScene = game.addScene(new Scene("menu", game));
+    menuScene.setup((scene) => {
+        scene.addObject(new TitleLogo(scene, {x: 400, y: 20, width: 200, height: 100}));
+        for(let x = 200; x < 600; x+=100) {
+            scene.addObject(new Terrain(scene, {x: x, y: 450, width: 50, height: 50, color: '#0ff'}));
+        }
+        for(let x = 600; x < 1200; x+=100) {
+            for(let y = 350; y < 600; y+=50) {
+                scene.addObject(new Terrain(scene, {x: x, y: y, width: 50, height: 50, color: '#0ff'}));
+            }
+        }
+        //scene.addObject(new Terrain(scene, {x: 300, y: 450, width: 50, height: 50, color: '#0ff'}));
+        //scene.addObject(new Terrain(scene, {x: 200, y: 500, width: 50, height: 50, color: '#0ff'}));
+        scene.addObject(new Player(scene, {x: 210, y: 550, width: 50, height: 50, color: '#0ff'}));
+        scene.addObject(new Fox(scene, {x: 1000, y: 460, r:20, color: '#0f0'}));
+        scene.addObject(new Wolf(scene, {x: 600, y: 460, r:20, color: '#0f0'}));
+        scene.addObject(new Lynx(scene, {x: 900, y: 560, r:20, color: '#0f0'}));
+        scene.addObject(new Coin(scene, {x: 800, y: 660, r:20, color: '#0f0'}));
+    });
+    menuScene.initialize();
 
     const level1 = game.addScene(new Scene("level1", game));
     level1.setup((scene) => {
@@ -47,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
         scene.addObject(new TitleLogo(scene, {x: 400, y: 20, width: 200, height: 100}));
         
     });
-    level1.initialize();
     
    
     const level2 = game.addScene(new Scene("level2", game));

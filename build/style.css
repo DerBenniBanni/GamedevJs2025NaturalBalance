@@ -12,7 +12,8 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgb(0, 78, 42);
+    background-color: rgb(36, 34, 150);
+    background: linear-gradient(0deg, rgb(10, 9, 82) 0%, rgb(58, 118, 174) 100%);
     display: flex;
     justify-content: center;
     align-items: center;

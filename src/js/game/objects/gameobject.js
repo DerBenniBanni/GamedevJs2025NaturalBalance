@@ -14,6 +14,7 @@ export default class GameObject {
         this.rotation = 0; // Rotation of the object in radians
         this.speed = 0; // Change in position
         this.dRot = 0; // Change in rotation
+        this.yDelta = 0; // Y delta for the object
     }
 
     update(deltaTime) {

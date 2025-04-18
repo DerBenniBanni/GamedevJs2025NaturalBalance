@@ -21,6 +21,17 @@ export default class StackedSprite {
             }
             return topHeight > max ? topHeight : max;
         }, 0);
+
+        const toLayer = ({type,x,z,width,depth,lightDist,darkDist}) => {
+            if(lightDist != undefined && darkDist != undefined) {
+                return [
+                    type, x, z, width, depth, lightDist, darkDist
+                ];
+            }
+            return [
+                type, x, z, width, depth
+            ];
+        }
         
         for(let currentHeight = 0; currentHeight <= maxHeight; currentHeight++) {
             let layer = [];
@@ -28,23 +39,22 @@ export default class StackedSprite {
                 if(this.defIntersectsHeight(def, currentHeight)) {
                     switch(def[0]) {
                         case "B":
-                            let [type, baseHeight, height, x, z, width, depth, fill, stroke] = def;
+                            let [type, baseHeight, height, x, z, width, depth, fill, stroke, lightDist, darkDist] = def;
                             if(currentHeight == baseHeight || currentHeight == baseHeight+height) {
                                 if(stroke) {
                                     layer.push(["#", stroke]);
-                                    layer.push([
-                                        "R", x, z, width, depth
-                                    ]);
+                                    layer.push(toLayer({type:"R", x, z, width, depth, lightDist, darkDist}));
+                                    layer.push(["#", fill]);
+                                    
+                                    layer.push(toLayer({type:"R", x:x+1, z:z+1, width:width-2, depth:depth-2, lightDist, darkDist}));
+                                } else {
+                                    layer.push(["#", fill]);
+                                    layer.push(toLayer({type:"R", x, z, width, depth, lightDist, darkDist}));
                                 }
-                                layer.push(["#", fill]);
-                                layer.push([
-                                    "R", x+1, z+1, width-2, depth-2
-                                ]);
+                                
                             } else {
                                 layer.push(["#", fill]);
-                                layer.push([
-                                    "R", x, z, width, depth
-                                ]);
+                                layer.push(toLayer({type:"R", x, z, width, depth, lightDist, darkDist}));
                                 if(stroke) {
                                     layer.push(["#", stroke]);
                                     layer.push(["R", x, z, 1, 1]);
@@ -99,12 +109,20 @@ export default class StackedSprite {
             ctx.strokeStyle = this.fillStyle;
         } else {
             if (layer[0] === "R") {
-                let x = Math.cos(-rotation + Math.PI * 0.5) * 40;
-                let y = Math.sin(-rotation + Math.PI * 0.5) * 40;
-                let gradient = ctx.createRadialGradient(x, y, 3, x, y, 120);
+                let hasLightDist = layer.length > 5 && layer[5] != undefined;
+                let lightDist = layer.length > 5 && layer[5] != undefined ? layer[5] : 40;
+                let darkDist = layer.length > 6 && layer[5] != undefined ? layer[6] : 120;
+                let x = Math.cos(-rotation + Math.PI * 0.5) * lightDist;
+                let y = Math.sin(-rotation + Math.PI * 0.5) * lightDist;
+                if(hasLightDist) {
+                    x = layer[1] + layer[3] / 2;
+                    y = layer[2] + layer[4] / 2;
+                }
+                let gradient = ctx.createRadialGradient(x, y, 1, x, y, darkDist);
                 // Add three color stops
                 gradient.addColorStop(0, this.fillStyle);
-                gradient.addColorStop(1, "#000");
+                let dark = "#000"; // Todo: calculate dark color
+                gradient.addColorStop(1, dark);
                 ctx.fillStyle = gradient;
                 ctx.fillRect(layer[1], layer[2], layer[3], layer[4]);
                 //ctx.fillStyle = '#ff0';
