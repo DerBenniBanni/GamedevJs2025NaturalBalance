@@ -24,6 +24,7 @@ export default class Game {
 
         this.inputMode = 'keyboard'; // Default input mode
 
+        this.debug = false;
     }
 
     start() {

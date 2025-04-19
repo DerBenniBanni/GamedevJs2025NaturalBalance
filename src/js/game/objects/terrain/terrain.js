@@ -8,9 +8,12 @@ export default class Terrain extends SpritestackObject {
         super(scene, {x, y}); 
         this.type = "terrain";
         this.yDelta = 100;
-        
+        this.sortY = 35;
+        this.colliderType = "rectangle"; 
+        this.colliderWidth = 100;
+        this.colliderHeight = 50;
         this.imagebufferType = "variation"; 
-        this.variation = rndInt(9)
+        this.variation = rndInt(9);
     }
     createVariation() {
         this.renderer = new StackedSprite(this.createStackDef());
@@ -21,11 +24,11 @@ export default class Terrain extends SpritestackObject {
         let stackDef = {
             def:[]
         };
- 
+        
         for(let x = -45; x <= 45; x+=10) {
             for(let z = -45; z <= 45; z+=10) {
                 let height = 18 + rndInt(10);
-                let bottom = 95 - height;
+                let bottom = 100 - height;
                 let sx = 10 + rndInt(10);
                 let sz = 10 + rndInt(10);
                 let color = "765"; //(rndInt(2)+ 7) + '8'+ (rndInt(2));
@@ -33,6 +36,10 @@ export default class Terrain extends SpritestackObject {
                 stackDef.def.push([
                     'B', bottom, height, Math.floor(x-sx/2), Math.floor(z-sz/2), sx, sz, color, stroke,
                     sx, sx+50
+                ]);
+                stackDef.def.push([
+                    'B', bottom-2, 1, Math.floor(x-sx), Math.floor(z-sz), sx*2, sz*2, 'aaccff05',,
+                    0, 1000
                 ]);
             }
         }
@@ -64,9 +71,15 @@ export default class Terrain extends SpritestackObject {
         }
         */
     }
-    /*
-    render(ctx) {
-        this.renderer.render(ctx, this.x, this.y, this.rotation); 
+    
+    render(ctx, forceRender = false) {
+        super.render(ctx, forceRender); // Call the parent render method
+        if(!forceRender && this.game.debug) {
+            ctx.strokeStyle = '#f00';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(this.x - this.colliderWidth / 2, this.y - this.colliderHeight / 2, this.colliderWidth, this.colliderHeight); // Draw the collider rectangle 
+        }
     }
-    */
+
+    
 }

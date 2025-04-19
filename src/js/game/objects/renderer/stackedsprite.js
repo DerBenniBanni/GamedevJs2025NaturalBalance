@@ -111,7 +111,7 @@ export default class StackedSprite {
             if (layer[0] === "R") {
                 let hasLightDist = layer.length > 5 && layer[5] != undefined;
                 let lightDist = layer.length > 5 && layer[5] != undefined ? layer[5] : 40;
-                let darkDist = layer.length > 6 && layer[5] != undefined ? layer[6] : 120;
+                let darkDist = layer.length > 6 && layer[6] != undefined ? layer[6] : 120;
                 let x = Math.cos(-rotation + Math.PI * 0.5) * lightDist;
                 let y = Math.sin(-rotation + Math.PI * 0.5) * lightDist;
                 if(hasLightDist) {

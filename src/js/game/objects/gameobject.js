@@ -15,6 +15,13 @@ export default class GameObject {
         this.speed = 0; // Change in position
         this.dRot = 0; // Change in rotation
         this.yDelta = 0; // Y delta for the object
+        this.sortY = 0; // Y delta for the sorting
+
+        this.fallen = false; // Flag to indicate if the object has fallen
+    }
+
+    getSortY()  {
+        return this.y - this.sortY; // Return the Y position for sorting
     }
 
     update(deltaTime) {

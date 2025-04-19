@@ -28,12 +28,12 @@ export default class SpritestackObject extends GameObject {
             if(rotationDeg < 0) rotationDeg += 360; // Ensure rotation is positive
             if(imagebuffer.imgs[this.type] && imagebuffer.imgs[this.type][rotationDeg]) {
                 let imgCanvas = imagebuffer.imgs[this.type][rotationDeg]; // Get the image canvas for the current rotation
-                ctx.drawImage(imgCanvas, this.x - imgCanvas.width / 2, this.y - imgCanvas.height / 2 + this.yDelta); // Draw the image at the specified position
+                ctx.drawImage(imgCanvas, this.x - imgCanvas.width / 2, this.y - imgCanvas.height / 2); // Draw the image at the specified position
             }
         } else if(this.imagebufferType === "variation") {
             if(imagebuffer.imgs[this.type][this.variation]) {
                 let imgCanvas = imagebuffer.imgs[this.type][this.variation]; // Get the image canvas for the current variation
-                ctx.drawImage(imgCanvas, this.x - imgCanvas.width / 2, this.y - imgCanvas.height / 2 + this.yDelta); // Draw the image at the specified position
+                ctx.drawImage(imgCanvas, this.x - imgCanvas.width / 2, this.y - imgCanvas.height / 2); // Draw the image at the specified position
             }
         } else {
             this.renderer.render(ctx, this.x, this.y+ this.yDelta, this.rotation); 
