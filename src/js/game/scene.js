@@ -10,12 +10,12 @@ export default class Scene {
         this.objects.push(object); // Add object to the scene
         return object; // Return the added object
     }
-
-    getObjectsByType(type) {
-        return this.objects.filter(object => object.type === type); // Get objects of a specific type
+    getObjectsByTypes(...types) {
+        return this.objects.filter(object => types.includes(object.type)); // Get objects of specific types
     }
-    getObjectByType(type) {
-        let objects = this.getObjectsByType(type); // Get objects of a specific type
+    // get the first object of a specific type
+    getFirstObjectByType(type) {
+        let objects = this.getObjectsByTypes(type); // Get objects of a specific type
         if(objects.length > 0) {
             return objects[0]; // Return the first object of the specified type
         } else {

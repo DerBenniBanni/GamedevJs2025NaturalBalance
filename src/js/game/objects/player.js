@@ -1,5 +1,4 @@
 import Bullet from "./bullets/bullet.js";
-import Particle from "./particles/particle.js";
 import Rectangle from "./rectangle.js";
 import StackedSprite from "./renderer/stackedsprite.js";
 import stackDefRabbit from "./spritestacks/rabbit.js";
@@ -28,9 +27,7 @@ export default class Player extends Rectangle {
         this.terrainColliderWidth = 36;
         this.terrainColliderHeight = 18;
 
-        this.grounded = false; // Flag to check if the player is grounded
-        this.fallingOffset = 0; // Offset for falling animation
-        this.fallingSpeed = 0; // Speed of falling animation
+
     }
 
     
@@ -38,12 +35,7 @@ export default class Player extends Rectangle {
         super.update(deltaTime); // Call the parent class update method
         this.bulletTimer -= deltaTime; // Decrease the bullet timer
 
-        this.grounded = false; // Initialize grounded to false
-        this.scene.getObjectsByType('terrain').forEach((terrain) => {
-            if(this.checkCollision(terrain)) {
-                this.grounded = true; // Set grounded to true if colliding with terrain
-            }
-        });
+        this.checkGrounded();
         if(this.grounded) {
             this.fallingOffset = 0; // Reset falling offset if grounded
             this.fallingSpeed = 0; // Reset falling speed if grounded
@@ -99,41 +91,12 @@ export default class Player extends Rectangle {
                 this.hoppingSineTime += deltaTime; // Increment time if moving
             }
         } else {
-            this.sortY=15;
-            if(this.fallingSpeed == 0) {
-                this.fallingSpeed = 100;
-            }
-            this.fallingSpeed += 300 * deltaTime; // Increment falling speed if not grounded
-            this.fallingOffset += this.fallingSpeed * deltaTime; // Increment falling offset if not grounded
-            if(this.fallingOffset > 80) {
-                this.fallen = true; // Mark the object as fallen
-                if(this.fallingOffset < 200) {
-                    this.scene.addObject(new Particle(this.scene, {
-                        x: this.x + Math.random() * 40 - 20, 
-                        y: this.y + Math.random()* 30 - 15, 
-                        color: '#aaf5', 
-                        ttl: 3, 
-                        dx: Math.random() * 200 - 100, 
-                        dy: Math.random() * 100 - 300, 
-                        size: 15, dsize: -4, 
-                        gravity: 300,
-                        sortY: 15
-                    })); // Add a particle effect when falling
-                }
-            }
+            this.handleFall(deltaTime);
             if(this.fallingOffset > 1500) {
                 this.scene.initialize(); // Reset the scene if the falling offset exceeds a limit
             }
         }
         
-    }
-
-    checkCollision(terrain) {
-        // Check for collision with terrain using rectangle collision detection
-        return this.x + this.terrainColliderWidth / 2 > terrain.x - terrain.colliderWidth / 2 &&
-               this.x - this.terrainColliderWidth / 2 < terrain.x + terrain.colliderWidth / 2 &&
-               this.y + this.terrainColliderHeight / 2 > terrain.y - terrain.colliderHeight / 2 &&
-               this.y - this.terrainColliderHeight / 2 < terrain.y + terrain.colliderHeight / 2;
     }
 
   

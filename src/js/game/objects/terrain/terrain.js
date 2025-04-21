@@ -8,7 +8,7 @@ export default class Terrain extends SpritestackObject {
         super(scene, {x, y}); 
         this.type = "terrain";
         this.yDelta = 100;
-        this.sortY = 35;
+        this.sortY = 38;
         this.colliderType = "rectangle"; 
         this.colliderWidth = 100;
         this.colliderHeight = 50;

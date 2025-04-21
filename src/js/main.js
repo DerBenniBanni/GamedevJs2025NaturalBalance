@@ -21,12 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
     window.imagebuffer =new ImageBuffer();
     
     let preRenderScene = new Scene("preRender", game);
-    /*
+    
     imagebuffer.preRender(new Fox(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
+    /*
     imagebuffer.preRender(new Wolf(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
     imagebuffer.preRender(new Lynx(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
     imagebuffer.preRender(new Coin(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
-    */
+    /**/
     
     imagebuffer.preRenderVariation(new Terrain(preRenderScene, {x: 50, y: 50, width: 50, height: 50}), 140, 200,10);
    
@@ -70,10 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         scene.addObject(new Player(scene, {x: 200, y: 450, width: 50, height: 50, color: '#0ff'}));
+        scene.addObject(new Fox(scene, {x: 300, y: 450, width: 50, height: 50, color: '#0ff'}));
         /*
         scene.addObject(new Fox(scene, {x: 1000, y: 460, r:20, color: '#0f0'}));
         scene.addObject(new Wolf(scene, {x: 600, y: 460, r:20, color: '#0f0'}));
         scene.addObject(new Lynx(scene, {x: 900, y: 560, r:20, color: '#0f0'}));
+        /*
         scene.addObject(new Coin(scene, {x: 800, y: 660, r:20, color: '#0f0'}));
         */
     });
