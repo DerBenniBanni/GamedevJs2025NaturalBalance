@@ -1,4 +1,5 @@
 import Vec2d from "./objects/vec2d.js";
+import SFXPlayer from "./soundbox/sfxplayer.js";
 
 export default class Game {
     constructor(canvas) {
@@ -23,6 +24,8 @@ export default class Game {
         this.gamepad = null;
 
         this.inputMode = 'keyboard'; // Default input mode
+
+        this.sfxPlayer = new SFXPlayer(); // Sound effect player
 
         this.debug = false;
     }

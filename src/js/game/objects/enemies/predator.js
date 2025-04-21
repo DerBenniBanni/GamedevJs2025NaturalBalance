@@ -5,20 +5,30 @@ export default class Predator extends SpritestackObject {
             super(scene, {x, y, stackdef}); 
             this.type = "predator";
     
-            this.speed = 2;
+            this.speed = 0;
+            this.predatorSpeed =50; // Speed of the predator
             
             this.terrainColliderWidth = 36;
             this.terrainColliderHeight = 18;
             this.bulletColliderWidth = 50;
             this.bulletColliderHeight = 30;
+
+            this.hitJumping = false;
+            this.hitJumpDuration = 0.5; // Duration of the hit jump in seconds
+            this.hitJumpingTime = 0;
+            this.hitJumpDx = 0;
+            this.hitJumpDy = 0;
         }
 
         checkBulletCollision(bullet) {
+            if(this.hitJumping) {
+                return false; // Ignore bullet collision if already hit jumping
+            }
             // Check if the bullet is within the predator's collider area
             if(this._bulletHit(bullet)) {
-                // Todo: change to impulse...
-                this.x += Math.cos(bullet.rotation) * 10;
-                this.y += Math.sin(bullet.rotation) * 10;
+                this.hitJumping = true;
+                this.hitJumpDx = Math.cos(bullet.rotation) * 100; // Calculate the hit jump dx based on bullet rotation
+                this.hitJumpDy = Math.sin(bullet.rotation) * 100; // Calculate the hit jump dy based on bullet rotation
                 return true; // Bullet hit the predator
             }
             return false; // Bullet did not hit the predator
@@ -33,21 +43,38 @@ export default class Predator extends SpritestackObject {
         
         update(deltaTime) {
             super.update(deltaTime);
-            this.checkGrounded();
-            if(this.grounded) {
-                let player = this.scene.getFirstObjectByType("player");
-                if(player) {
-                    this.lookAt(player.x, player.y); // Look at the first player
-                } else {
-                    this.lookAt(this.game.mousePos.x, this.game.mousePos.y);
+            if(this.hitJumping) {
+                this.hitJumpingTime += deltaTime;
+                this.x += this.hitJumpDx * deltaTime;
+                this.y += this.hitJumpDy * deltaTime;
+                if(this.hitJumpingTime > this.hitJumpDuration) {
+                    this.hitJumping = false; // Reset hit jumping after 1 second
+                    this.hitJumpingTime = 0;
                 }
-                this.x += Math.cos(this.rotation) * this.speed * deltaTime;
-                this.y += Math.sin(this.rotation) * this.speed * deltaTime;
-                
             } else {
-                this.handleFall(deltaTime);
-                if(this.fallingOffset > 1500) {
-                    this.ttl = -1; 
+                this.checkGrounded();
+                if(this.grounded) {
+                    let player = this.scene.getFirstObjectByType("player");
+                    if(player) {
+                        this.lookAt(player.x, player.y); // Look at the first player
+                    } else {
+                        this.lookAt(this.game.mousePos.x, this.game.mousePos.y);
+                    }
+                    let nextX = this.x + Math.cos(this.rotation) * this.predatorSpeed * deltaTime;
+                    let nextY = this.y + Math.sin(this.rotation) * this.predatorSpeed * deltaTime;
+                    if(this.checkPointTerrainCollision(nextX, nextY)) {
+                        this.x = nextX;
+                        this.y = nextY;
+                    } else if(this.checkPointTerrainCollision(nextX, this.y)) {
+                        this.x = nextX;
+                    } else if(this.checkPointTerrainCollision(this.x, nextY)) {
+                        this.y = nextY;
+                    }
+                } else {
+                    this.handleFall(deltaTime);
+                    if(this.fallingOffset > 1500) {
+                        this.ttl = -1; 
+                    }
                 }
             }
         }
@@ -60,7 +87,12 @@ export default class Predator extends SpritestackObject {
             if(forceRender) {
                 super.render(ctx, forceRender);
             } else {
-                this.renderer.render(ctx, this.x, this.y + this.fallingOffset, this.rotation);
+                let hitJumpY = 0;
+                if(this.hitJumping) {
+                    hitJumpY = -Math.sin(Math.PI * (this.hitJumpingTime / this.hitJumpDuration)) * 30; // Calculate the hit jump Y offset based on time
+                }
+                this.renderer.render(ctx, this.x, this.y + hitJumpY + this.fallingOffset, this.rotation); // Render the predator at the new position
+
             }
 
             if(!forceRender && this.game.debug) {

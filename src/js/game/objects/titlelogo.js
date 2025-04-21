@@ -29,10 +29,12 @@ export default class TitleLogo extends Rectangle {
     }
     render(ctx) {
         [
-            ['#630', , 0, 12], 
-            ['#950', , 2, 8], 
-            ['#c70', , 2, 4], 
-            ['#fa0', '#fc0', 2, 0]
+            ['#420', '#420', 1, 15],
+            ['#630', '#630', 2, 12], 
+            ['#950', '#950', 3, 8], 
+            ['#c70', '#c70', 4, 4], 
+            ['#fc0', '#420', 8, 0],
+            ['#fc0', '#fc0', 5, 0]
         ].forEach(([fill, stroke, strokeWidth, yOffset,]) => {
             ctx.save();
             ctx.translate(this.x, this.y);

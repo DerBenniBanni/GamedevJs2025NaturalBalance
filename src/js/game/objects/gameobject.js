@@ -42,6 +42,16 @@ export default class GameObject {
                this.y - this.terrainColliderHeight / 2 < terrain.y + terrain.colliderHeight / 2;
     }
 
+    checkPointTerrainCollision(x, y) {
+        // Check for collision with terrain using rectangle collision detection
+        return this.scene.getObjectsByTypes('terrain')
+            .some((terrain) => x + 2 > terrain.x - terrain.colliderWidth / 2 &&
+                x - 2 / 2 < terrain.x + terrain.colliderWidth / 2 &&
+                y + 2 / 2 > terrain.y - terrain.colliderHeight / 2 &&
+                y - 2 / 2 < terrain.y + terrain.colliderHeight / 2);
+    }
+
+
     handleFall(deltaTime) {
         this.sortY=15;
             if(this.fallingSpeed == 0) {

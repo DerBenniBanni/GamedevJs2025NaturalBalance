@@ -28,7 +28,7 @@ export default class Trigger extends Rectangle {
     }
 
     checkCollision() {
-        this.scene.getObjectsByTypes('player').forEach(player => {
+        this.scene.getObjectsByType('player').forEach(player => {
             if (this.isColliding(player)) {
                 if (!this.contacts.has(player)) {
                     this.contacts.add(player); // Add to contacts

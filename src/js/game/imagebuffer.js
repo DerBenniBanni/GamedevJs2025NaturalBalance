@@ -1,10 +1,12 @@
 export default class ImageBuffer {
     constructor() {
         this.imgs = {}; // Object to hold image-array
+        this.states = []; // Array to hold prerender states
     }
 
     preRender(spritestackobject, width, height) {
         this.imgs[spritestackobject.type] = [];
+        this.states.push({type: spritestackobject.type, done: false}); // Store the state of the sprite
         this.renderAsyncRotated(spritestackobject, width, height, 0);
     }
 
@@ -14,7 +16,16 @@ export default class ImageBuffer {
         if(angle < maxangle) {
             let self = this;
             setTimeout(()=>self.renderAsyncRotated(spritestackobject, width, height, angle + 1), 1)
+        } else {
+            this.markStateDone(spritestackobject.type); // Mark the state as done
         }
+    }
+    markStateDone(type) {
+        this.states.forEach(state => {
+            if(state.type === type) {
+                state.done = true; // Mark the state as done
+            }
+        });
     }
 
     preRenderVariation(spritestackobject, width, height, variations) {
@@ -29,7 +40,19 @@ export default class ImageBuffer {
         if(variation > 0) {
             let self = this;
             setTimeout(()=>self.renderAsyncVariation(spritestackobject, width, height, variation - 1), 1)
+        } else {
+            this.markStateDone(spritestackobject.type); // Mark the state as done
         }
+    }
+
+    allDone() {
+        let done = true; // Flag to check if all states are done
+        this.states.forEach(state => {
+            if(!state.done) {
+                done = false; // If any state is not done, set flag to false
+            }
+        });
+        return done; // Return the status of all states
     }
 
 

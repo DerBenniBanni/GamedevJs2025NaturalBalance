@@ -84,6 +84,7 @@ export default class Player extends Rectangle {
                 let bullet = this.scene.addObject(new Bullet(this.scene, {x: this.x, y: this.y-1, r:this.rotation}));
                 bullet.speed = this.bulletSpeed;
                 this.bulletTimer = this.bulletInterval; // Reset the bullet timer
+                this.game.sfxPlayer.playAudio("shoot"); // Play shooting sound effect
             }
             if(!moving) {
                 this.hoppingSineTime = 0; // Reset time if not moving
