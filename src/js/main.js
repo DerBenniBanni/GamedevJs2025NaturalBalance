@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     game.sfxPlayer.playAudio("gamemusic"); // Play background music
     let preRenderScene = new Scene("preRender", game);
     
+    imagebuffer.preRender(new Player(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
     imagebuffer.preRender(new Fox(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
     /**/
     imagebuffer.preRender(new Wolf(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);

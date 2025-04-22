@@ -24,12 +24,7 @@ export default class SpritestackObject extends GameObject {
         if(forceRender) {
             this.renderer.render(ctx, this.x, this.y+ this.yDelta, this.rotation); // Render the sprite on the canvas
         } else if(this.imagebufferType === "rotation") {
-            let rotationDeg = Math.floor((this.rotation * 180 / Math.PI) % 360); // Convert rotation to degrees
-            if(rotationDeg < 0) rotationDeg += 360; // Ensure rotation is positive
-            if(imagebuffer.imgs[this.type] && imagebuffer.imgs[this.type][rotationDeg]) {
-                let imgCanvas = imagebuffer.imgs[this.type][rotationDeg]; // Get the image canvas for the current rotation
-                ctx.drawImage(imgCanvas, this.x - imgCanvas.width / 2, this.y - imgCanvas.height / 2); // Draw the image at the specified position
-            }
+            this.renderSpriteBuffer(this.x, this.y + this.yDelta, ctx); // Render the sprite buffer
         } else if(this.imagebufferType === "variation") {
             if(imagebuffer.imgs[this.type][this.variation]) {
                 let imgCanvas = imagebuffer.imgs[this.type][this.variation]; // Get the image canvas for the current variation
@@ -37,6 +32,15 @@ export default class SpritestackObject extends GameObject {
             }
         } else {
             this.renderer.render(ctx, this.x, this.y+ this.yDelta, this.rotation); 
+        }
+    }
+
+    renderSpriteBuffer(x, y, ctx) {
+        let rotationDeg = Math.floor((this.rotation * 180 / Math.PI) % 360); // Convert rotation to degrees
+        if(rotationDeg < 0) rotationDeg += 360; // Ensure rotation is positive
+        if(imagebuffer.imgs[this.type] && imagebuffer.imgs[this.type][rotationDeg]) {
+            let imgCanvas = imagebuffer.imgs[this.type][rotationDeg]; // Get the image canvas for the current rotation
+            ctx.drawImage(imgCanvas, x - imgCanvas.width / 2, y - imgCanvas.height / 2); // Draw the image at the specified position
         }
     }
 }

@@ -13,11 +13,7 @@ export default class Predator extends SpritestackObject {
             this.bulletColliderWidth = 50;
             this.bulletColliderHeight = 30;
 
-            this.hitJumping = false;
-            this.hitJumpDuration = 0.5; // Duration of the hit jump in seconds
-            this.hitJumpingTime = 0;
-            this.hitJumpDx = 0;
-            this.hitJumpDy = 0;
+
         }
 
         checkBulletCollision(bullet) {
@@ -91,8 +87,7 @@ export default class Predator extends SpritestackObject {
                 if(this.hitJumping) {
                     hitJumpY = -Math.sin(Math.PI * (this.hitJumpingTime / this.hitJumpDuration)) * 30; // Calculate the hit jump Y offset based on time
                 }
-                this.renderer.render(ctx, this.x, this.y + hitJumpY + this.fallingOffset, this.rotation); // Render the predator at the new position
-
+                this.renderSpriteBuffer(this.x, this.y + hitJumpY + this.fallingOffset, ctx); // Render the sprite buffer
             }
 
             if(!forceRender && this.game.debug) {

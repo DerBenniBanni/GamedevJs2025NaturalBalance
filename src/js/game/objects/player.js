@@ -1,11 +1,11 @@
 import Bullet from "./bullets/bullet.js";
-import Rectangle from "./rectangle.js";
 import StackedSprite from "./renderer/stackedsprite.js";
+import SpritestackObject from "./spritestackobject.js";
 import stackDefRabbit from "./spritestacks/rabbit.js";
 
-export default class Player extends Rectangle {
+export default class Player extends SpritestackObject {
     constructor(scene, {x, y, width, height, color}) {
-        super(scene, {x, y, width, height});
+        super(scene, {x, y, stackdef: stackDefRabbit});
         this.type = "player";
         this.color = color;
         
@@ -27,7 +27,23 @@ export default class Player extends Rectangle {
         this.terrainColliderWidth = 36;
         this.terrainColliderHeight = 18;
 
+        this.predatorColliderWidth = 80;
+        this.predatorColliderHeight = 40;
 
+    }
+
+    checkPredatorHit(predator) {
+        if(this.hitJumping) {  
+            return false; // Ignore predator collision if already hit jumping
+        }
+        // Check if the predator is within the player's collider area
+        if(predator.x > this.x - this.predatorColliderWidth / 2 &&
+           predator.x < this.x + this.predatorColliderWidth / 2 &&
+           predator.y > this.y - this.predatorColliderHeight / 2  &&
+           predator.y < this.y + this.predatorColliderHeight / 2 ) {
+            return true; // Set hit jumping flag
+        }
+        return false; // Predator did not hit the player
     }
 
     
@@ -35,8 +51,26 @@ export default class Player extends Rectangle {
         super.update(deltaTime); // Call the parent class update method
         this.bulletTimer -= deltaTime; // Decrease the bullet timer
 
+        this.scene.getObjectsByTypes('fox', 'wolf', 'lynx').find(predator => {
+            if(this.checkPredatorHit(predator)) {
+                this.hitJumping = true; // Set hit jumping flag
+                this.hitJumpDx = Math.cos(predator.rotation) * 200; // Calculate the hit jump dx based on predator rotation
+                this.hitJumpDy = Math.sin(predator.rotation) * 200; // Calculate the hit jump dy based on predator rotation
+                return true; // Predator hit the player
+            }
+            return false; // Predator did not hit the player
+        });
+
         this.checkGrounded();
-        if(this.grounded) {
+        if(this.hitJumping) {
+            this.hitJumpingTime += deltaTime;
+            this.x += this.hitJumpDx * deltaTime;
+            this.y += this.hitJumpDy * deltaTime;
+            if(this.hitJumpingTime > this.hitJumpDuration) {
+                this.hitJumping = false; // Reset hit jumping after 1 second
+                this.hitJumpingTime = 0;
+            }
+        } else if(this.grounded) {
             this.fallingOffset = 0; // Reset falling offset if grounded
             this.fallingSpeed = 0; // Reset falling speed if grounded
         
@@ -105,15 +139,25 @@ export default class Player extends Rectangle {
         if(this.fallen) {
             return; // Do not render if the object is marked as fallen
         }
-        this.renderShadow(22, ctx);
-        // Calculate the hopping motion using a sine wave
-        const hopOffset = Math.abs(Math.sin(this.hoppingSineTime * this.hoppingSpeed) * this.hoppingAmplitude);
-        this.renderer.render(ctx, this.x, this.y - hopOffset + this.fallingOffset, this.rotation);
-
-        if(!forceRender && this.game.debug) {
-            ctx.strokeStyle = '#f00';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(this.x - this.terrainColliderWidth / 2, this.y - this.terrainColliderHeight / 2 + this.yDelta, this.terrainColliderWidth, this.terrainColliderHeight); // Draw the collider rectangle 
+        if(forceRender) {
+            this.renderer.render(ctx, this.x, this.y+ this.yDelta, this.rotation); // Render the sprite on the canvas
+        } else {
+            this.renderShadow(22, ctx);
+            // Calculate the hopping motion using a sine wave
+            const hopOffset = Math.abs(Math.sin(this.hoppingSineTime * this.hoppingSpeed) * this.hoppingAmplitude);
+            let hitJumpY = 0;
+            if(this.hitJumping) {
+                hitJumpY = Math.sin(Math.PI * (this.hitJumpingTime / this.hitJumpDuration)) * 30; // Calculate the hit jump Y offset based on time
+            }
+            //this.renderer.render(ctx, this.x, this.y - hopOffset - hitJumpY + this.fallingOffset, this.rotation);
+            this.renderSpriteBuffer(this.x, this.y - hopOffset - hitJumpY + this.fallingOffset, ctx); // Render the sprite buffer
+            if(!forceRender && this.game.debug) {
+                ctx.strokeStyle = '#f00';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(this.x - this.terrainColliderWidth / 2, this.y - this.terrainColliderHeight / 2 + this.yDelta, this.terrainColliderWidth, this.terrainColliderHeight); // Draw the collider rectangle 
+                ctx.strokeStyle = '#0ff';
+                ctx.strokeRect(this.x - this.predatorColliderWidth / 2, this.y - this.predatorColliderHeight / 2 + this.yDelta, this.predatorColliderWidth, this.predatorColliderHeight); // Draw the predator collider rectangle
+            }
         }
     }
 }

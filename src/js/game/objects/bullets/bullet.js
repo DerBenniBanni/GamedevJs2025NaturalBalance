@@ -22,7 +22,8 @@ export default class Bullet extends SpritestackObject{
                     this.scene.addObject(new Particle(this.scene, {
                         x: this.x + Math.random() * 10 - 5, 
                         y: this.y + Math.random()* 10 - 5, 
-                        color: '#f805', 
+                        color: '#ff8800', 
+                        alpha: 1,
                         ttl: 0.5, 
                         dx: Math.random() * 200 - 100, 
                         dy: Math.random() * -100 , 

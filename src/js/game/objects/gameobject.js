@@ -22,6 +22,12 @@ export default class GameObject {
         this.fallingOffset = 0; // Offset for falling animation
         this.fallingSpeed = 0; // Speed of falling animation
 
+        this.hitJumping = false;
+        this.hitJumpDuration = 0.5; // Duration of the hit jump in seconds
+        this.hitJumpingTime = 0;
+        this.hitJumpDx = 0;
+        this.hitJumpDy = 0;
+
         this.ripplesCreated = false;
     }
 
@@ -65,7 +71,8 @@ export default class GameObject {
                     this.scene.addObject(new Particle(this.scene, {
                         x: this.x + Math.random() * 40 - 20, 
                         y: this.y + Math.random()* 30 - 15, 
-                        color: '#aaf5', 
+                        color: '#aaaaff',
+                        alpha: 0.5, 
                         ttl: 2, 
                         dx: Math.random() * 200 - 100, 
                         dy: Math.random() * 100 - 300, 
@@ -81,7 +88,8 @@ export default class GameObject {
                             particle: "ripple",
                             x: this.x, 
                             y: this.y + this.fallingOffset / 2, 
-                            color: '#aaf3', 
+                            color: '#aaaaff',
+                            alpha: 0.5, 
                             ttl: 3, 
                             dx: 0, 
                             dy: 0, 
