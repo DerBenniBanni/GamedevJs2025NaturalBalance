@@ -31,6 +31,7 @@ export default class Particle {
         this.rotation += this.dRot * deltaTime; // Update rotation based on change in rotation
         this.dy += this.gravity * deltaTime; // Update y position based on speed and gravity
         this.size += this.dsize * deltaTime; // Update size based on change in size
+        this.size = Math.max(this.size, 0);
     }
     
     render(ctx) {
