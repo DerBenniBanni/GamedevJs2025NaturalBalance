@@ -12,6 +12,16 @@ export default class SFXPlayer {
         this.sfx[name] = document.createElement("audio");
         this.sfx[name].src = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
         this.sfx[name].loop = loop;
+        if(loop) {
+            this.sfx[name].addEventListener('timeupdate', function(){
+                let buffer = .1
+                if(this.currentTime > this.duration - buffer){
+                    this.currentTime = 0
+                    this.play()
+                }
+            });
+        }
+        
     }
 
     playAudio(audioname, restart = true) {

@@ -29,6 +29,9 @@ export default class GameObject {
         this.hitJumpDy = 0;
 
         this.ripplesCreated = false;
+
+        this.triggerColliderWidth = 40; // Width of the trigger collider
+        this.triggerColliderHeight = 20; // Height of the trigger collider
     }
 
     getSortY()  {

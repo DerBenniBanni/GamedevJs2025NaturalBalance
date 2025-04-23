@@ -2,6 +2,7 @@ import Bullet from "./bullets/bullet.js";
 import StackedSprite from "./renderer/stackedsprite.js";
 import SpritestackObject from "./spritestackobject.js";
 import stackDefRabbit from "./spritestacks/rabbit.js";
+import Vec2d from "./vec2d.js";
 
 export default class Player extends SpritestackObject {
     constructor(scene, {x, y, width, height, color}) {
@@ -90,23 +91,47 @@ export default class Player extends SpritestackObject {
             
             // Handle keyboard input for movement        
             let moving = false;
+            let forwardVector = new Vec2d(Math.cos(this.rotation), Math.sin(this.rotation)); // Forward vector based on rotation
+            let backwardVector = new Vec2d(-forwardVector.x, -forwardVector.y); // Backward vector opposite to forward vector
+            let rightVector = new Vec2d(-forwardVector.y, forwardVector.x); // Right vector perpendicular to forward vector
+            let leftVector = new Vec2d(forwardVector.y, -forwardVector.x); // Left vector perpendicular to forward vector
+            let moveVector = new Vec2d(0, 0); // Initialize movement vector
             if(this.game.actionActive('left')) {
-                this.x -= this.maxSpeed * deltaTime; // Move left
+                if(this.game.keyboardMode == 'Face') {
+                    moveVector = leftVector.multiply(this.maxSpeed * deltaTime); // strafe left
+                } else {
+                    moveVector.x -= this.maxSpeed * deltaTime; // Move left
+                }
                 moving = true;
             }
             if(this.game.actionActive('right')) {
-                this.x += this.maxSpeed * deltaTime; // Move right
+                if(this.game.keyboardMode == 'Face') {
+                    moveVector = rightVector.multiply(this.maxSpeed * deltaTime); // strafe right
+                } else {
+                    moveVector.x += this.maxSpeed * deltaTime; // Move right
+                }
                 moving = true;
             }
             if(this.game.actionActive('up')) {
-                this.y -= this.maxSpeed * deltaTime; // Move up
+                if(this.game.keyboardMode == 'Face') {
+                    moveVector = forwardVector.multiply(this.maxSpeed * deltaTime); // forward
+                } else {
+                    moveVector.y -= this.maxSpeed * deltaTime; // Move up
+                }
                 moving = true;
             }
             if(this.game.actionActive('down')) {
-                this.y += this.maxSpeed * deltaTime; // Move down
+                if(this.game.keyboardMode == 'Face') {
+                    moveVector = backwardVector.multiply(this.maxSpeed * deltaTime); // forward
+                } else {
+                    moveVector.y += this.maxSpeed * deltaTime; // Move down
+                }
                 moving = true;
             }
-            if(!moving && this.game.inputMode == 'gamepad') {
+            if(moving) {
+                this.x += moveVector.x; // Update x position based on movement vector
+                this.y += moveVector.y; // Update y position based on movement vector
+            } else if(this.game.inputMode == 'gamepad') {
                 let dx = this.game.gamepad.axisValue('leftHorizontal');
                 let dy = this.game.gamepad.axisValue('leftVertical');
                 moving = Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1; // Check if the left stick is moved

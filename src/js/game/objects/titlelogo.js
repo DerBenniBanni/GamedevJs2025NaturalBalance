@@ -22,6 +22,21 @@ export default class TitleLogo extends Rectangle {
             [900,153,976,156,989,165,987,201,956,200,951,181,925,183,928,272,954,272,956,254,987,257,991,286,984,297,901,299,887,291,890,164],
             [999,153,1081,156,1082,186,1036,187,1034,205,1064,206,1065,233,1036,233,1036,263,1084,266,1085,296,999,301]
         ];
+        let minX = 1920;
+        let maxX = 0;
+        this.letters.forEach(letter => {
+            letter.forEach((point, index) => {
+                if(index % 2 == 0) {
+                    if(point < minX) {
+                        minX = point;
+                    }
+                    if(point > maxX) {
+                        maxX = point;
+                    }
+                }
+            });
+        });
+        this.width = maxX - minX;
 
     }
     update(deltaTime) {
@@ -37,7 +52,7 @@ export default class TitleLogo extends Rectangle {
             ['#fc0', '#fc0', 5, 0]
         ].forEach(([fill, stroke, strokeWidth, yOffset,]) => {
             ctx.save();
-            ctx.translate(this.x, this.y);
+            ctx.translate(this.x - this.width/2, this.y);
             ctx.fillStyle = fill;
             if(stroke) {
                 ctx.strokeStyle = stroke;

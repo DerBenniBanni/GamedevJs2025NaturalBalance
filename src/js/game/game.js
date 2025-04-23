@@ -24,6 +24,7 @@ export default class Game {
         this.gamepad = null;
 
         this.inputMode = 'keyboard'; // Default input mode
+        this.keyboardMode = 'WASD'; // Default keyboard mode
 
         this.sfxPlayer = new SFXPlayer(); // Sound effect player
 
