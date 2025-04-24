@@ -18,6 +18,7 @@ export default class Bullet extends SpritestackObject{
         this.scene.getObjectsByTypes('fox', 'wolf', 'lynx').find(predator => {
             if(predator.checkBulletCollision(this)) {
                 this.ttl = -1; // Mark the bullet for removal
+                this.game.sfxPlayer.playAudio("hit");
                 for(let i = 0; i < 20; i++) {
                     this.scene.addObject(new Particle(this.scene, {
                         x: this.x + Math.random() * 10 - 5, 

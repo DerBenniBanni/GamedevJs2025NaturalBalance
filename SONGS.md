@@ -3,6 +3,10 @@
 [breakbeat-rocky](https://sb.bitsnbites.eu/?data=U0JveA4C7d1NSsNAGMbxJ2larQQRXZSCC115AW8giF2JdOnCC7gzSkGKoRZE-yW48S4uPYhH8Ah1JknLNNAUET-K_9_L5JnMJJCB7gY6l5vSqnbKimNpN1ZJYaURSnpd8fzbRik8CLZ8z_PT6qora15aPVNF-WiqKJ9MFeVXtE252THlpnVvys389_dNuTk05WZ-Pfl5AAAAAAAAAAAA_CGnsXQWh1Koo2zIH0t7tjPdJWsl463pS_n7iZuszbv_LW3nal05V1c3a-577ZknOrk3rvkFAQAAAAAAAAAALKNxdGyamgoqd_vpkL8ubduONxFlD89LAAAAAAAAAAAAYLn003YSrDUvTPelLO_97bB6Xt4I_GyTrBSpuL5b3VRR1lQtzKJdvp_Y6asvmK8tmI8WrAEAAAAAAAAAAACflJxL9mw6s-eSBfZcMqV_umjP2hppqEGyo_agnmlKTu-Kl2SRA_P1I7OKfE7WBQAAAAAAAAAAgP_lAw)  (WIP!)
 
 
-[throw carrot](https://sb.bitsnbites.eu/?data=U0JveA4C6xRlAAIWRgblJHZmhgYGBk0OBkMeoFA0OyNTOwODIgODKpNAL8MooAcYDeeRCQA)
+[throw carrot](https://sb.bitsnbites.eu/?data=U0JveA4C6xRlAAIWRgblJHZmhgYGBk1pBndJoFA0OwNTOwNDJAODKpNAL8MooAcYDeeRCQA)
 
-[hit carrot](https://sb.bitsnbites.eu/?data=U0JveA4C6xRlAAIWRibdNHbm5CIpTk4GFlfZNDaGVC5GRoW5_rIMDDGMAr0Mo4AeYDScRyYAAA)
+[hit carrot](https://sb.bitsnbites.eu/?data=U0JveA4C6xRlAAIWRibdNHbm5CIpTk5xFlfZNDaGVC5GRoW5_pEMDDGMAr0Mo4AeYDScRyYAAA)
+
+[splash](https://sb.bitsnbites.eu/?data=U0JveA4C6xRlAAIBRgbRfAtm0TIGmwBphmpJoFAMOwNTOwNDJANDDptAL8MoGAWjYBSMgsEIRsvnUTAKRsEoGAWjYPgBAA)
+
+[coin](https://sb.bitsnbites.eu/?data=U0JveA4C6xRlAAIBRob2PkbG9j4eBgYmBhtukBgHA9N_BgYFfdZMJoFehlEwCkbBKBgFgxFglM8zR8NkFIyCUTAKRsEoGOoAAA)

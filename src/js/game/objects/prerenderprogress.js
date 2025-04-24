@@ -19,6 +19,7 @@ export default class PrerenderProgress extends GameObject {
         super.update(deltaTime); // Call the parent class update method
         if(imagebuffer.allDone()) { // Check if all images are prerendered
             this.state = FINISHED; // Change state to finished
+            this.game.canvas.focus();
         }
         if(this.state == FINISHED) {
             if(!this.waitForFireAction) {

@@ -86,6 +86,7 @@ export default class GameObject {
                 }
                 if(!this.ripplesCreated) {
                     this.ripplesCreated= true;
+                    this.game.sfxPlayer.playAudio("splash");
                     for(let i = 20; i < 100; i+=20) {
                         this.scene.addObject(new Particle(this.scene, {
                             particle: "ripple",

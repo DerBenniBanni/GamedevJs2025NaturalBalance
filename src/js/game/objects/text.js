@@ -1,11 +1,11 @@
 import Rectangle from "./rectangle.js";
 
 export default class Text extends Rectangle {
-    constructor(scene, {x, y, width, height, text}) {
+    constructor(scene, {x, y, width, height, text, color}) {
         super(scene, {x, y, width, height});
         this.type = 'text';
 
-        this.color = '#000';
+        this.color = color || '#000';
         
         this.text = text; // Text to display on the trigger
         this.sortY = -1005;
