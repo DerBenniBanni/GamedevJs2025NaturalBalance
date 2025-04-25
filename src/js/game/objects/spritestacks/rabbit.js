@@ -18,7 +18,7 @@ const stackDefRabbit = {
         ['B', 0, 35, -20, -20, 40, 40, rabbitWhiteFill, rabbitWhiteStroke],
         // Eyes
         ['B', 18, 6, 19, -10, 2, 3, rabbitBlackFill,],
-        ['B', 20, 6, 19, 7, 2, 3, rabbitBlackFill,],
+        ['B', 18, 6, 19, 7, 2, 3, rabbitBlackFill,],
         // left Ear
         ['B', 35, 20, 13, -18, 5, 10, rabbitWhiteFill, rabbitWhiteStroke],
         ['B', 35, 16, 17, -16, 1, 6, rabbitPinkFill,],

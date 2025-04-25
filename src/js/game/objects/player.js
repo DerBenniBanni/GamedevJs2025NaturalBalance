@@ -1,4 +1,5 @@
 import Bullet from "./bullets/bullet.js";
+import Particle from "./particles/particle.js";
 import StackedSprite from "./renderer/stackedsprite.js";
 import SpritestackObject from "./spritestackobject.js";
 import stackDefRabbit from "./spritestacks/rabbit.js";
@@ -52,7 +53,7 @@ export default class Player extends SpritestackObject {
         super.update(deltaTime); // Call the parent class update method
         this.bulletTimer -= deltaTime; // Decrease the bullet timer
 
-        this.scene.getObjectsByTypes('fox', 'wolf', 'lynx').find(predator => {
+        this.scene.getObjectsByTypes('fox', 'wolf', 'lynx', 'zombie').find(predator => {
             if(this.checkPredatorHit(predator)) {
                 this.hitJumping = true; // Set hit jumping flag
                 this.hitJumpDx = Math.cos(predator.rotation) * 200; // Calculate the hit jump dx based on predator rotation
@@ -138,7 +139,20 @@ export default class Player extends SpritestackObject {
                 this.x += dx * this.maxSpeed * deltaTime; // Move left/right based on gamepad input
                 this.y += dy * this.maxSpeed * deltaTime; // Move up/down based on gamepad input
             }
-
+            if(moving) {
+                this.scene.addObject(new Particle(this.scene, {
+                    x: this.x + Math.random() * 40 - 20, 
+                    y: this.y + Math.random()* 20 - 10, 
+                    color: '#ccff00', 
+                    alpha: 0.4,
+                    ttl: 0.5, 
+                    dx: Math.random() * 20 - 10, 
+                    dy: Math.random() * 10 - 5, 
+                    size: 5, dsize: -8, 
+                    gravity: 0,
+                    sortY: 3
+                })); // Add a particle effect when moving
+            }
             if(this.bulletTimer <= 0 && this.game.actionActive('fire') ) {
                 let bullet = this.scene.addObject(new Bullet(this.scene, {x: this.x, y: this.y-1, r:this.rotation}));
                 bullet.speed = this.bulletSpeed;

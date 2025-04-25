@@ -15,7 +15,7 @@ export default class Bullet extends SpritestackObject{
     
     update(deltaTime) {
         super.update(deltaTime); 
-        this.scene.getObjectsByTypes('fox', 'wolf', 'lynx').find(predator => {
+        this.scene.getObjectsByTypes('fox', 'wolf', 'lynx', 'zombie').find(predator => {
             if(predator.checkBulletCollision(this)) {
                 this.ttl = -1; // Mark the bullet for removal
                 this.game.sfxPlayer.playAudio("hit");

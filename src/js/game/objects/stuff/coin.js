@@ -15,7 +15,7 @@ export default class Coin extends SpritestackObject {
     update(deltaTime) {
         super.update(deltaTime);
 
-        this.noMorePredators = this.scene.getObjectsByTypes('fox', 'wolf', 'lynx').length === 0 ? true : false; // Check if there are no more predators in the scene
+        this.noMorePredators = this.scene.getObjectsByTypes('fox', 'wolf', 'lynx', 'zombie').length === 0 ? true : false; // Check if there are no more predators in the scene
         if(this.noMorePredators) {
             let player = this.scene.getFirstObjectByType("player");
             this.rotation += this.rotSped * deltaTime; // Update rotation

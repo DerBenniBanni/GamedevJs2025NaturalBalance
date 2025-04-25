@@ -22,11 +22,14 @@ import sfxCoin from "./game/soundbox/sfx_coin.js";
 import musicGame from "./game/soundbox/music_game.js";
 import PrerenderProgress from "./game/objects/prerenderprogress.js";
 import Text from "./game/objects/text.js";
+import Zombie from "./game/objects/enemies/zombie.js";
+import TerrainWater from "./game/objects/terrain/terrainwater.js";
 
 function addTerrainRectangle(scene, x, y, width, height) {
     for(let i = 0; i < width; i+=100) {
         for(let j = 0; j < height; j+=50) {
             scene.addObject(new Terrain(scene, {x: x+i, y: y+j}));
+            scene.addObject(new TerrainWater(scene, {x: x+i, y: y+j}));
         }
     }
 }
@@ -44,28 +47,32 @@ document.addEventListener("DOMContentLoaded", () => {
     game.sfxPlayer.add("gamemusic", musicGame, true);
     
     let preRenderScene = new Scene("preRender", game);
+    imagebuffer.preRender(new Player(preRenderScene, {x: 50, y: 50}), 120, 140);
+    imagebuffer.preRender(new Fox(preRenderScene, {x: 50, y: 50}), 120, 140);
+    imagebuffer.preRender(new Wolf(preRenderScene, {x: 50, y: 50}), 120, 140);
+    imagebuffer.preRender(new Lynx(preRenderScene, {x: 50, y: 50}), 120, 140);
+    imagebuffer.preRender(new Zombie(preRenderScene, {x: 50, y: 50}), 120, 140);
+    imagebuffer.preRender(new Coin(preRenderScene, {x: 50, y: 50}), 120, 140);
     
-    imagebuffer.preRender(new Player(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
-    imagebuffer.preRender(new Fox(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
-    imagebuffer.preRender(new Wolf(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
-    imagebuffer.preRender(new Lynx(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
-    imagebuffer.preRender(new Coin(preRenderScene, {x: 50, y: 50, width: 50, height: 50, color: '#f00'}), 120, 140);
 
-    imagebuffer.preRenderVariation(new Terrain(preRenderScene, {x: 50, y: 50, width: 50, height: 50}), 140, 200,10);
+    imagebuffer.preRenderVariation(new Terrain(preRenderScene, {x: 50, y: 50}), 140, 200, 10);
+    imagebuffer.preRenderVariation(new TerrainWater(preRenderScene, {x: 50, y: 50}), 140, 200, 10);
    
-    registerKeys(game); // Register actions with the game
     game.registerActions(config.actions); // Register keyboard events
 
+    
 
     const menuScene = game.addScene(new Scene("menu", game));
     menuScene.setup((scene) => {
         scene.addObject(new TitleLogo(scene, {x: 960, y: 20, width: 200, height: 100}));
+        
+        scene.addObject(new Text(scene, {
+            x: 960, y: 1050, width: 1, height: 1, color: '#fff',
+            text: "This is a gamedev.js gamejam entry for 2025 by Christoph Schansky (DerBenniBanni)"
+        }));
         scene.addObject(new PrerenderProgress(scene, {
             x: 960, y: 400, 
             finishedCallback: () => {
-                canvas.focus();
-                registerPointerEvents(game, canvas); // Register mouse events
-                registerGamepadEvents(game, canvas); // Register gamepad events
 
                 game.sfxPlayer.playAudio("gamemusic"); // Play the game music
 
@@ -197,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addTerrainRectangle(scene, 900, 500, 500, 50);
         
         addTerrainRectangle(scene, 1300, 400, 300, 200);
-        scene.addObject(new Coin(scene, {x: 1450, y: 500, r:20, nextLevel: 'levelEnd'}));
+        scene.addObject(new Coin(scene, {x: 1450, y: 500, r:20, nextLevel: 'level5'}));
 
         
         scene.addObject(new Player(scene, {x: 250, y: 250}));
@@ -218,8 +225,76 @@ document.addEventListener("DOMContentLoaded", () => {
         }));
     });
 
+    const level5 = game.addScene(new Scene("level5", game));
+    level5.setup((scene) => {
+        
+        addTerrainRectangle(scene, 200, 200, 300, 200);
+        addTerrainRectangle(scene, 1500, 200, 300, 200);
+        addTerrainRectangle(scene, 200, 700, 300, 200);
+        addTerrainRectangle(scene, 1500, 700, 300, 200);
+
+        addTerrainRectangle(scene, 500, 300, 300, 500);
+        addTerrainRectangle(scene, 1200, 300, 300, 500);
+    
+        addTerrainRectangle(scene, 800, 400, 400, 300);
+
+        scene.addObject(new Coin(scene, {x: 960, y: 650, r:20, nextLevel: 'level6'}));
+
+        
+        scene.addObject(new Player(scene, {x: 960, y: 550}));
+        
+        scene.addObject(new Fox(scene, {x: 250, y: 250}));
+        scene.addObject(new Wolf(scene, {x: 1550, y: 250}));
+        scene.addObject(new Lynx(scene, {x: 250, y: 800}));
+        scene.addObject(new Lynx(scene, {x: 1550, y: 800}));
+        
+        scene.addObject(new Text(scene, {
+            x: 960, y: 250, width: 1, height: 1, color: '#fff',
+            text: "As if foxes and wolfes weren't enough!"
+        }));
+        scene.addObject(new Text(scene, {
+            x: 960, y: 280, width: 1, height: 1, color: '#fff',
+            text: "Some lynxes join the party!"
+        }));
+    });
 
 
+    const level7 = game.addScene(new Scene("level7", game));
+    level7.setup((scene) => {
+        
+        addTerrainRectangle(scene, 200, 200, 300, 200);
+        addTerrainRectangle(scene, 400, 200, 1400, 50);
+
+        addTerrainRectangle(scene, 1700, 250, 100, 750);
+        addTerrainRectangle(scene, 200, 950, 1500, 50);
+
+        addTerrainRectangle(scene, 200, 550, 100, 400);
+        addTerrainRectangle(scene, 300, 550, 500, 50);
+        addTerrainRectangle(scene, 700, 600, 200, 50);
+
+        addTerrainRectangle(scene, 1500, 800, 200, 50);
+        addTerrainRectangle(scene, 1500, 400, 200, 50);
+        addTerrainRectangle(scene, 1000, 750, 100, 200);
+
+        addTerrainRectangle(scene, 900, 450, 300, 200);
+
+        scene.addObject(new Player(scene, {x: 250, y: 300}));
+        scene.addObject(new Zombie(scene, {x: 1500, y: 400}));
+        scene.addObject(new Zombie(scene, {x: 1500, y: 800}));
+        scene.addObject(new Zombie(scene, {x: 1000, y: 800}));
+        scene.addObject(new Zombie(scene, {x: 1000, y: 500}));
+        scene.addObject(new Fox(scene, {x: 1000, y: 200}));
+        scene.addObject(new Lynx(scene, {x: 1600, y: 200}));
+        scene.addObject(new Wolf(scene, {x: 500, y: 550}));
+
+        scene.addObject(new Coin(scene, {x: 960, y: 500, r:20, nextLevel: 'levelEnd'}));
+
+        
+        scene.addObject(new Text(scene, {
+            x: 600, y: 300, width: 1, height: 1, color: '#fff',
+            text: "ZOMBIES!?! REALLY?"
+        }));
+    });
 
 
     const levelEnd = game.addScene(new Scene("levelEnd", game));
@@ -270,5 +345,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Start the game loop
     game.start();
     //game.switchToSceneName("levelEnd"); // Start with level scene for development
+
+    
+    canvas.focus();
+    registerKeys(game); // Register actions with the game
+    registerPointerEvents(game, canvas); // Register mouse events
+    registerGamepadEvents(game, canvas); // Register gamepad events
 
 });

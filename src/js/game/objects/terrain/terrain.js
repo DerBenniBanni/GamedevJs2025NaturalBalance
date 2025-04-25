@@ -37,10 +37,12 @@ export default class Terrain extends SpritestackObject {
                     'B', bottom, height, Math.floor(x-sx/2), Math.floor(z-sz/2), sx, sz, color, stroke,
                     sx, sx+50
                 ]);
+                /*
                 stackDef.def.push([
                     'B', bottom-2, 1, Math.floor(x-sx), Math.floor(z-sz), sx*2, sz*2, 'aaccff05',,
                     0, 1000
                 ]);
+                */
             }
         }
 

@@ -28,7 +28,7 @@ const stackDefWolf = {
         ['B', 0, 35, -20, -20, 40, 40, wolfFill, wolfStroke], 
         // Eyes
         ['B', 18, 6, 19, -10, 2, 3, wolfBlackFill,], 
-        ['B', 20, 6, 19, 7, 2, 3, wolfBlackFill,],
+        ['B', 18, 6, 19, 7, 2, 3, wolfBlackFill,],
         // left Ear
         ['B', 35, 10, 13, -18, 5, 10, wolfFill, wolfStroke],
         ['B', 45, 3, 14, -17, 5, 8, wolfFill,wolfStroke],
