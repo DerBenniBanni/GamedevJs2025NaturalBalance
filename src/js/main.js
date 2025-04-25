@@ -56,8 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
     registerKeys(game); // Register actions with the game
     game.registerActions(config.actions); // Register keyboard events
 
-    registerPointerEvents(game, canvas); // Register mouse events
-    registerGamepadEvents(game, canvas); // Register gamepad events
 
     const menuScene = game.addScene(new Scene("menu", game));
     menuScene.setup((scene) => {
@@ -65,6 +63,10 @@ document.addEventListener("DOMContentLoaded", () => {
         scene.addObject(new PrerenderProgress(scene, {
             x: 960, y: 400, 
             finishedCallback: () => {
+                canvas.focus();
+                registerPointerEvents(game, canvas); // Register mouse events
+                registerGamepadEvents(game, canvas); // Register gamepad events
+
                 game.sfxPlayer.playAudio("gamemusic"); // Play the game music
 
                 addTerrainRectangle(scene, 560, 450, 900, 550); 
