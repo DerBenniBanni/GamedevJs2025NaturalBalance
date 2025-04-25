@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scene.addObject(new PrerenderProgress(scene, {
             x: 960, y: 400, 
             finishedCallback: () => {
-
+                canvas.focus();
                 game.sfxPlayer.playAudio("gamemusic"); // Play the game music
 
                 addTerrainRectangle(scene, 560, 450, 900, 550); 
@@ -259,8 +259,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    const level7 = game.addScene(new Scene("level7", game));
-    level7.setup((scene) => {
+    const level6 = game.addScene(new Scene("level6", game));
+    level6.setup((scene) => {
         
         addTerrainRectangle(scene, 200, 200, 300, 200);
         addTerrainRectangle(scene, 400, 200, 1400, 50);
