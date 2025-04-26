@@ -34,10 +34,12 @@ function addTerrainRectangle(scene, x, y, width, height) {
     }
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("mainCanvas");
     canvas.focus(); // Focus the canvas for keyboard input
     window.game = new Game(canvas);
+    registerGamepadEvents(game, game.canvas); // Register gamepad events
     window.imagebuffer =new ImageBuffer();
 
     game.sfxPlayer.add("shoot", sfxShoot);

@@ -27,7 +27,6 @@ export default class PrerenderProgress extends GameObject {
             game.canvas.focus();
             registerKeys(game); // Register actions with the game
             registerPointerEvents(game, game.canvas); // Register mouse events
-            registerGamepadEvents(game, game.canvas); // Register gamepad events
         }
         if(this.state == FINISHED) {
             if(!this.waitForFireAction) {

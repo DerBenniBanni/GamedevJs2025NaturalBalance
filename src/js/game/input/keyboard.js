@@ -8,8 +8,8 @@ export default function registerKeys(game) {
         game.keys[ev.code] = bool;
         game.inputMode = 'keyboard'; // Set input mode to keyboard
     }
-    window.addEventListener('keydown', (ev) => handleEvent(ev, true)); // Register keydown event
-    window.addEventListener('keyup', (ev) => handleEvent(ev, false)); // Register keyup event
+    document.addEventListener('keydown', (ev) => handleEvent(ev, true)); // Register keydown event
+    document.addEventListener('keyup', (ev) => handleEvent(ev, false)); // Register keyup event
 
     game.actionChecks.push((game, action) => {
         return game.actions[action].keys.some(key => {
