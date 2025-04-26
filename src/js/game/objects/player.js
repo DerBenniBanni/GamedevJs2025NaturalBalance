@@ -173,6 +173,17 @@ export default class Player extends SpritestackObject {
         
     }
 
+    checkBulletCollision(bullet) {
+        // Check if the bullet is within the players's collider area
+        if(this.checkPredatorHit(bullet)) {
+            this.hitJumping = true;
+            this.hitJumpDx = Math.cos(bullet.rotation) * 100; // Calculate the hit jump dx based on bullet rotation
+            this.hitJumpDy = Math.sin(bullet.rotation) * 100; // Calculate the hit jump dy based on bullet rotation
+            return true; // Bullet hit the players
+        }
+        return false; // Bullet did not hit the players
+    }
+
   
     render(ctx, forceRender = false) {
         if(this.fallen) {

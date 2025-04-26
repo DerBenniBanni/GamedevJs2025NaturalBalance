@@ -36,6 +36,10 @@ export default class Predator extends SpritestackObject {
                    this.y - this.bulletColliderHeight / 2 < bullet.y &&
                    this.y + this.bulletColliderHeight / 2 > bullet.y
         }
+
+        updateAddon(deltaTime) {
+            //additional stuff for implementing classes
+        }
         
         update(deltaTime) {
             super.update(deltaTime);
@@ -72,7 +76,8 @@ export default class Predator extends SpritestackObject {
                         this.ttl = -1; 
                     }
                 }
-            }
+            };
+            this.updateAddon(deltaTime);
         }
     
         

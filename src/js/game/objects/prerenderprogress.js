@@ -1,3 +1,6 @@
+import registerGamepadEvents from "../input/gamepad.js";
+import registerKeys from "../input/keyboard.js";
+import registerPointerEvents from "../input/pointer.js";
 import GameObject from "./gameobject.js";
 
 const RENDERING = 1;
@@ -16,10 +19,15 @@ export default class PrerenderProgress extends GameObject {
         this.waitForFireAction = true; // Keep alive flag
     }
     update(deltaTime) {
+        document.getElementById("mainCanvas").focus()
         super.update(deltaTime); // Call the parent class update method
         if(imagebuffer.allDone()) { // Check if all images are prerendered
             this.state = FINISHED; // Change state to finished
-            this.game.canvas.focus();
+            let game = this.game
+            game.canvas.focus();
+            registerKeys(game); // Register actions with the game
+            registerPointerEvents(game, game.canvas); // Register mouse events
+            registerGamepadEvents(game, game.canvas); // Register gamepad events
         }
         if(this.state == FINISHED) {
             if(!this.waitForFireAction) {

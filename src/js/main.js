@@ -121,6 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     x: 960, y: 650, width: 1, height: 1, 
                     text: "Walk into the buttons to switch/activate"
                 }));
+                scene.addObject(new Text(scene, {
+                    x: 960, y: 670, width: 1, height: 1, 
+                    text: "(if the keyboard does not work, please reload the page)"
+                }));
 
                     
 
@@ -262,6 +266,41 @@ document.addEventListener("DOMContentLoaded", () => {
     const level6 = game.addScene(new Scene("level6", game));
     level6.setup((scene) => {
         
+        addTerrainRectangle(scene, 200, 200, 300, 800);
+        addTerrainRectangle(scene, 400, 200, 1400, 50);
+
+        
+        addTerrainRectangle(scene, 400, 950, 1400, 50);
+
+        
+        addTerrainRectangle(scene, 1700, 250, 100, 700);
+
+        addTerrainRectangle(scene, 800, 400, 400, 400);
+        
+
+        scene.addObject(new Player(scene, {x: 250, y: 300}));
+        scene.addObject(new Zombie(scene, {x: 1000, y: 500}));
+        scene.addObject(new Fox(scene, {x: 1000, y: 200}));
+        scene.addObject(new Lynx(scene, {x: 1600, y: 200}));
+
+        scene.addObject(new Coin(scene, {x: 1700, y: 500, r:20, nextLevel: 'level7'}));
+
+        
+        scene.addObject(new Text(scene, {
+            x: 600, y: 300, width: 1, height: 1, color: '#fff',
+            text: "A ZOMBIE!?! REALLY?"
+        }));
+        
+        scene.addObject(new Text(scene, {
+            x: 700, y: 340, width: 1, height: 1, color: '#fff',
+            text: "And it is throwing stones!"
+        }));
+    });
+
+    
+    const level7 = game.addScene(new Scene("level7", game));
+    level7.setup((scene) => {
+        
         addTerrainRectangle(scene, 200, 200, 300, 200);
         addTerrainRectangle(scene, 400, 200, 1400, 50);
 
@@ -292,10 +331,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         scene.addObject(new Text(scene, {
             x: 600, y: 300, width: 1, height: 1, color: '#fff',
-            text: "ZOMBIES!?! REALLY?"
+            text: "Oh No! There are more ZOMBIES!"
         }));
     });
-
 
     const levelEnd = game.addScene(new Scene("levelEnd", game));
     levelEnd.setup((scene) => {
@@ -344,12 +382,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Start the game loop
     game.start();
-    //game.switchToSceneName("levelEnd"); // Start with level scene for development
+    //game.switchToSceneName("level6"); // Start with level scene for development
 
     
-    canvas.focus();
-    registerKeys(game); // Register actions with the game
-    registerPointerEvents(game, canvas); // Register mouse events
-    registerGamepadEvents(game, canvas); // Register gamepad events
+
 
 });
