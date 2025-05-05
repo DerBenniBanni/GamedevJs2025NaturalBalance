@@ -1,5 +1,9 @@
-# Natural Balance? Not with me!
+Natural Balance? Not with me!
+
+# Unnatural Balance
 a Game entry for gamedev.js jam 2025 by Christoph Schansky
+
+Play the game here: https://derbennibanni.itch.io/unnatural-balance-13kb
 
 ## Story
 Nature keeps the numbers of rabbits and foxes in balance: more foxes that eat rabbits lead to less rabbits, less rabbits to eat lead to less foxes, less foxes lead to more rabbits, more rabbits lead to more foxes, and so on...
@@ -7,8 +11,6 @@ Nature keeps the numbers of rabbits and foxes in balance: more foxes that eat ra
 That was the natural balance for many hundred years, but thats over now, as one rebellios young rabbit refuses to be eaten by foxes. It grabs its pack of extra sharp carrots and takes measures into its own paws.
 
 ## Infos
-Play the game here: https://derbennibanni.itch.io/unnatural-balance-13kb
-
 The game is written purely in Javascript, no image-files are used for the sprites. Everything is pre-rendered at runtime. The final size of the ZIP-File is around 11.5 kilobyte.
 
 The music and sfx are create using the magnificent tool Soundbox from https://sb.bitsnbites.eu/ 
